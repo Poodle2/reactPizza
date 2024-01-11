@@ -1,29 +1,32 @@
 import './scss/app.scss'
 
 import axios from "axios";
+import {useEffect, useState} from "react";
 
 import {Header} from "./comtoments/Header";
 import Sort from "./comtoments/Sort";
 import Categories from "./comtoments/Categories";
-import PizzaBlock from "./pizza/PizzaBlock";
-import {useEffect, useState} from "react";
+import PizzaBlock from "./PizzaBlock";
+import SkeletonPizza from "./PizzaBlock/SkeletonPizza";
+
 
 function App() {
 
-    const [pizzaItems, setPizzaItems] = useState([])
-
-    const getItems = async () => {
-        try {
-            let response = await axios.get('https://65985b4e668d248edf2481e2.mockapi.io/items-pizza')
-                .then(res => res.data);
-            setPizzaItems(response)
-        } catch (error) {
-            const message = `Винекла помилка ${error} `
-            console.log(message)
-        }
-    }
+    const [isLoading, setIsLoading] = useState(true)
+    const [itemsPizza, setItemsPizza] = useState([])
 
     useEffect(() => {
+        const getItems = async () => {
+            try {
+                let response = await axios.get('https://65985b4e668d248edf2481e2.mockapi.io/items-pizza')
+                    .then(res => res.data);
+                setItemsPizza(response)
+                setIsLoading(!isLoading)
+            } catch (error) {
+                const message = `Винекла помилка ${error} `
+                console.log(message)
+            }
+        }
         getItems()
     }, [])
 
@@ -38,10 +41,11 @@ function App() {
                     </div>
                     <h2 className="content__title">Все пиццы</h2>
                     <div className="content__items">
-                        {pizzaItems.map(item => <PizzaBlock key={item.id}
-                                                            {...item}
-                        />)}
+                        {isLoading === true
+                            ? [...new Array(6)].map((_, index) => <SkeletonPizza key={index}/>)
+                            : itemsPizza.map(item => <PizzaBlock key={item.id} {...item}/>)}
                     </div>
+
                 </div>
             </div>
         </div>

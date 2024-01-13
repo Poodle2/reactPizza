@@ -1,11 +1,10 @@
 import {useState} from "react";
 
 const Index = ({price,title,imageUrl,types,sizes}) => {
+
     const [activeType, setActiveType] = useState(0)
     const [activeSize, setActiveSize]= useState(0)
     const typeName = ['тонкое', 'традиционное']
-
-
 
     return (
         <div className="pizza-block">

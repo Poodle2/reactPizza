@@ -4,7 +4,7 @@ const Index = ({price,title,imageUrl,types,sizes}) => {
 
     const [activeType, setActiveType] = useState(0)
     const [activeSize, setActiveSize]= useState(0)
-    const typeName = ['тонкое', 'традиционное']
+    const typeName = ['тонке', 'традиційне']
 
     return (
         <div className="pizza-block">
@@ -26,7 +26,7 @@ const Index = ({price,title,imageUrl,types,sizes}) => {
                 </ul>
             </div>
             <div className="pizza-block__bottom">
-                <div className="pizza-block__price">от {price} грн</div>
+                <div className="pizza-block__price">от {price} ₴</div>
                 <div className="button button--outline button--add">
                     <svg
                         width="12"
@@ -40,7 +40,7 @@ const Index = ({price,title,imageUrl,types,sizes}) => {
                             fill="white"
                         />
                     </svg>
-                    <span>Добавить</span>
+                    <span>Додати</span>
                     <i>0</i>
                 </div>
             </div>

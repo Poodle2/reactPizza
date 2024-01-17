@@ -21,6 +21,7 @@ body {
   }
 }
 
+
 .content {
   padding: 40px 0;
 
@@ -76,6 +77,7 @@ body {
 
         ul {
           width: 700px;
+
           li {
             padding: 8px 20px;
           }
@@ -120,6 +122,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .content__items {
+    display: block;
   }
 
   .content__title {
@@ -175,6 +181,7 @@ body {
 
   &__item {
     display: flex;
+    justify-content: space-between;
     width: 100%;
     border-top: 1px solid $gray-line;
     padding-top: 30px;
@@ -215,7 +222,7 @@ body {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 13%;
+      width: 40%;
 
       &-minus {
         svg {

@@ -1,7 +1,7 @@
 import Sort from "../comtoments/Sort";
 import SkeletonPizza from "../comtoments/pizzaBlock/SkeletonPizza";
 import PizzaBlock from "../comtoments/pizzaBlock";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Categories from "../comtoments/Categories";
 
@@ -23,20 +23,23 @@ const Home = () => {
             }
         }
         getItems()
+        window.scrollTo(0, 0);
     }, [])
 
 
     return (
         <>
-            <div className="content__top">
-                <Categories/>
-                <Sort/>
-            </div>
-            <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
-                {isLoading === true
-                    ? [...new Array(6)].map((_, index) => <SkeletonPizza key={index}/>)
-                    : itemsPizza.map(item => <PizzaBlock key={item.id} {...item}/>)}
+            <div className="container">
+                <div className="content__top">
+                    <Categories/>
+                    <Sort/>
+                </div>
+                <h2 className="content__title">Все пиццы</h2>
+                <div className="content__items">
+                    {isLoading === true
+                        ? [...new Array(6)].map((_, index) => <SkeletonPizza key={index}/>)
+                        : itemsPizza.map(item => <PizzaBlock key={item.id} {...item}/>)}
+                </div>
             </div>
         </>
     )

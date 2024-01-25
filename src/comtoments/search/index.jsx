@@ -2,12 +2,13 @@ import style from './Search.module.scss'
 import search from "../../assets/img/search.svg";
 import close from "../../assets/img/close.svg";
 
-import {useContext} from "react";
-import {AppContext} from "../../App";
+import {useSelector, useDispatch} from "react-redux";
+import {setSearchValue} from '../../redux/slices/searchSlice'
 
 const Search = () => {
 
-    const {searchValue, setSearchValue} = useContext(AppContext)
+    const searchValue = useSelector(state => state.searchReducer.searchValue)
+    const dispatch = useDispatch()
 
     return (
         <div className={style.root}>
@@ -15,12 +16,12 @@ const Search = () => {
             <input className={style.input}
                    value={searchValue}
                    placeholder='Пошук піц...'
-                   onChange={(event) => setSearchValue(event.target.value)}
+                   onChange={(event) => dispatch(setSearchValue(event.target.value))}
             />
             {searchValue && <img className={style.closeIcon}
                                  src={close}
                                  alt='close'
-                                 onClick={() => setSearchValue('')}/>}
+                                 onClick={() => dispatch(setSearchValue(''))}/>}
         </div>
 
     )

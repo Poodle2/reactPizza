@@ -1,17 +1,23 @@
 import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
-const Sort = ({value, onChangeSort}) => {
+import {setSortType} from '../redux/slices/filterSlice'
+
+const listPopup = [
+    {name: 'популярності', sortProperty: 'rating'},
+    {name: 'від дорогих до дешевих', sortProperty: 'price'},
+    {name: 'від дешевих до дорогих', sortProperty: '-price'},
+    {name: 'алфавіту', sortProperty: '-title'}]
+
+const Sort = () => {
+
+    const sortType = useSelector(state => state.filterReducer.sortType)
+    const dispatch = useDispatch()
 
     const [openPopup, setOpenPopup] = useState(false)
-    const listPopup = [
-        {name: 'популярності', sortProperty: 'rating'},
-        {name: 'від дорогих до дешевих', sortProperty: 'price'},
-        {name: 'від дешевих до дорогих', sortProperty: '-price'},
-        {name: 'алфавіту', sortProperty: '-title'}]
 
-
-    const onClickListItem = (i) => {
-        onChangeSort(i)
+    const onClickListItem = (obj) => {
+        dispatch(setSortType(obj))
         setOpenPopup(false)
     }
 
@@ -31,7 +37,7 @@ const Sort = ({value, onChangeSort}) => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => setOpenPopup(!openPopup)}>{value.name}</span>
+                <span onClick={() => setOpenPopup(!openPopup)}>{sortType.name}</span>
             </div>
             {openPopup &&
                 <div className="sort__popup">
@@ -39,7 +45,7 @@ const Sort = ({value, onChangeSort}) => {
                         {listPopup.map((list, i) =>
                             <li key={i}
                                 onClick={() => onClickListItem(list)}
-                                className={value.sortProperty === list.sortProperty ? 'active' : ''}>
+                                className={sortType.sortProperty === list.sortProperty ? 'active' : ''}>
                                 {list.name}</li>)}
                     </ul>
                 </div>}

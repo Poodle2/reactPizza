@@ -1,19 +1,17 @@
 import './scss/app.scss'
 
-import React, {createContext, useState} from "react";
+import React from "react";
 import {AppRouter} from "./comtoments/router/Router";
 import {RouterProvider} from "react-router-dom";
-
-export const AppContext = createContext({})
+import {store} from "./redux/store";
+import {Provider} from "react-redux";
 
 function App() {
 
-    const [searchValue, setSearchValue] = useState('')
-
     return (
-            <AppContext.Provider value={{searchValue, setSearchValue}}>
-                <RouterProvider router={AppRouter}/>
-            </AppContext.Provider>
+        <Provider store={store}>
+            <RouterProvider router={AppRouter}/>
+        </Provider>
     );
 }
 

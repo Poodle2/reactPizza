@@ -1,9 +1,35 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-const Index = ({price,title,imageUrl,types,sizes}) => {
+const PizzaBlock = ({price, title, imageUrl, types, sizes}) => {
 
     const [activeType, setActiveType] = useState(0)
-    const [activeSize, setActiveSize]= useState(0)
+    const [activeSize, setActiveSize] = useState(0)
+    const [priceToSize, setPriceToSize] = useState(price)
+
+    useEffect(() => {
+        const priceSize = () => {
+
+            if (activeType === 1 && activeSize === 0) {
+                return setPriceToSize(price / 100 * 5 + price)
+            }
+            if (activeType === 1 && activeSize === 1) {
+                return setPriceToSize(price / 100 * 15 + price)
+            }
+            if (activeType === 1 && activeSize === 2) {
+                return setPriceToSize(price / 100 * 25 + price)
+            }
+            if (activeSize === 1) {
+                return setPriceToSize(price / 100 * 10 + price)
+            }
+            if (activeSize === 2) {
+                return setPriceToSize(price / 100 * 20 + price)
+            }
+            return setPriceToSize(price)
+        }
+        priceSize()
+    }, [activeSize, activeType])
+
+
     const typeName = ['тонке', 'традиційне']
 
     return (
@@ -17,16 +43,18 @@ const Index = ({price,title,imageUrl,types,sizes}) => {
             <div className="pizza-block__selector">
                 <ul>
                     {types.map(typeIndex =>
-                        <li key={typeIndex} onClick={() => setActiveType(typeIndex)} className={activeType === typeIndex ? 'active' : '' }>
+                        <li key={typeIndex} onClick={() => setActiveType(typeIndex)}
+                            className={activeType === typeIndex ? 'active' : ''}>
                             {typeName[typeIndex]}</li>)}
                 </ul>
                 <ul>
                     {sizes.map((size, index) =>
-                        <li key={size} onClick={() => setActiveSize(index)} className={activeSize === index ? 'active' : '' }>{size} см.</li>)}
+                        <li key={size} onClick={() => setActiveSize(index)}
+                            className={activeSize === index ? 'active' : ''}>{size} см.</li>)}
                 </ul>
             </div>
             <div className="pizza-block__bottom">
-                <div className="pizza-block__price">от {price} ₴</div>
+                <div className="pizza-block__price">от {priceToSize} ₴</div>
                 <div className="button button--outline button--add">
                     <svg
                         width="12"
@@ -48,4 +76,4 @@ const Index = ({price,title,imageUrl,types,sizes}) => {
     )
 }
 
-export default Index
+export default PizzaBlock
